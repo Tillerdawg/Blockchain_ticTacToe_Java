@@ -4,14 +4,13 @@
  */
 package noobchain; // this file is part of the noobchain package
 
-// import needed security and utility modules: PrivateKey, PublicKey, and ArrayList
+/* Import needed security and utility modules: PrivateKey, PublicKey, and ArrayList */
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.util.ArrayList;
 
 // a Class for creating Transaction objects
 public class Transaction {
-	// create Transaction object fields
 	// Contains a unique id for Transaction objects
 	public String transactionId;
 	// Sender's address/public key
@@ -34,21 +33,26 @@ public class Transaction {
 
 	// Constructor: A method for constructing Transaction objects
 	public Transaction(PublicKey from, PublicKey to, float value, ArrayList<TransactionInput> inputs) {
-		// Initialize instance variables
-		this.sender = from; // sets the sender's publicKey value
-		this.recipient = to; // sets the recipient's publicKey value
-		this.value = value; // sets the transaction's value
-		this.inputs = inputs; // sets the inputs for the transaction
+		// Sets the sender's publicKey value
+		this.sender = from;
+		// Sets the recipient's publicKey value
+		this.recipient = to;
+		// Sets the transaction's value
+		this.value = value;
+		// Sets the inputs for the transaction
+		this.inputs = inputs;
 		// Create new SwansonQuote object and store quote in swansonQuote String
 		swansonQuote = new SwansonQuote().getQuote();
 
 	}
 
-	// A method for calculating and returning a cryptographic hash for a transaction
-	// as a String
-	/* Add swansonQuote to calculateHash() */
+	/*
+	 * A method for calculating and returning a cryptographic hash for a transaction
+	 * as a String
+	 */
 	private String calulateHash() {
-		sequence++; // increase the sequence to avoid 2 identical transactions having the same hash
+		// Increase the sequence to avoid 2 identical transactions having the same hash
+		sequence++;
 		// Calculate and return the hash using transaction values
 		return StringUtil.applySha512(StringUtil.getStringFromKey(sender) + StringUtil.getStringFromKey(recipient)
 				+ Float.toString(value) + swansonQuote + sequence);
@@ -56,8 +60,10 @@ public class Transaction {
 
 	// A method to generate a cryptographic signature using a private key
 	public void generateSignature(PrivateKey privateKey) {
-		// Create a data string of the sender's and recipient's public keys and the
-		// value to be sent to the recipient
+		/*
+		 * Create a data string of the sender's and recipient's public keys and the
+		 * value to be sent to the recipient
+		 */
 		String data = StringUtil.getStringFromKey(sender) + StringUtil.getStringFromKey(recipient)
 				+ Float.toString(value);
 		// Create a cryptographic signature with the data string and the private key
@@ -72,16 +78,19 @@ public class Transaction {
 		// Collect all transaction input values
 		for (TransactionInput i : inputs) {
 			if (i.UTXO == null)
-				continue; // if Transaction can't be found skip it, This behavior may not be optimal.
-			// add individual total to overall inputs total
+				/* If transaction can't be found, skip it. This behavior may not be optimal */
+				continue;
+			// Add individual total to overall inputs total
 			total += i.UTXO.value;
 		}
-		// return the total inputs value
+		// Return the total inputs value
 		return total;
 	}
 
-	// A method to return the Outputs value of a transaction as a floating point
-	// number
+	/*
+	 * A method to return the Outputs value of a transaction as a floating point
+	 * number
+	 */
 	public float getOutputsValue() {
 		// Initialize local variable
 		float total = 0;
@@ -118,11 +127,14 @@ public class Transaction {
 		}
 
 		// Generate transaction outputs:
-		float leftOver = getInputsValue() - value; // get value of inputs then the left over change:
-		transactionId = calulateHash(); // sets the transaction's unique id
-		outputs.add(new TransactionOutput(this.recipient, value, transactionId)); // send value to recipient
-		outputs.add(new TransactionOutput(this.sender, leftOver, transactionId)); // send the left over 'change' back to
-																					// sender
+		// Get the value of inputs then the left over change
+		float leftOver = getInputsValue() - value;
+		// Sets the transaction's unique id
+		transactionId = calulateHash();
+		// Send value to recipient
+		outputs.add(new TransactionOutput(this.recipient, value, transactionId));
+		// Send the left over 'change' back to the sender
+		outputs.add(new TransactionOutput(this.sender, leftOver, transactionId));
 
 		// Add outputs to Unspent list
 		for (TransactionOutput o : outputs) {
@@ -143,12 +155,16 @@ public class Transaction {
 
 	// A boolean method to verify a cryptographic signature
 	public boolean verifySignature() {
-		// Create a data string of the sender's and recipient's public keys and the
-		// value to be sent to the recipient
+		/*
+		 * Create a data string of the sender's and recipient's public keys and the
+		 * value to be sent to the recipient
+		 */
 		String data = StringUtil.getStringFromKey(sender) + StringUtil.getStringFromKey(recipient)
 				+ Float.toString(value);
-		// If the signature can be verified using the sender's public key and the data
-		// string, return true, otherwise return false
+		/*
+		 * If the signature can be verified using the sender's public key and the data
+		 * string, return true, otherwise return false
+		 */
 //		return StringUtil.verifyECDSASig(sender, data, signature);
 		return StringUtil.verifySHA1withDSASig(sender, data, signature);
 	}
