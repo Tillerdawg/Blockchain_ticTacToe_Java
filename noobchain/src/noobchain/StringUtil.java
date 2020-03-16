@@ -4,7 +4,7 @@
  */
 package noobchain; // this file is part of the noobchain package
 
-// import needed security and utility modules: Key, MessageDigest, PrivateKey, PublicKey, Signature, Arraylist, Base64, and List
+/* Import needed security and utility modules: Key, MessageDigest, PrivateKey, PublicKey, Signature, Arraylist, Base64, and List */
 import java.security.Key;
 import java.security.MessageDigest;
 import java.security.PrivateKey;
@@ -48,14 +48,14 @@ public class StringUtil {
 			output = realSig;
 		}
 		/*
-		 * if the compiler is unable to run the code in the 'try' block, it will run the
+		 * If the compiler is unable to run the code in the 'try' block, it will run the
 		 * code in the 'catch' block
 		 */
 		catch (Exception e) {
-			// throw a new runtime exception
+			// Throw a new runtime exception
 			throw new RuntimeException(e);
 		}
-		// return the value of the 'output' variable to the calling function
+		// Return the value of the 'output' variable to the calling function
 		return output;
 	}
 
@@ -87,14 +87,14 @@ public class StringUtil {
 			output = realSig;
 		}
 		/*
-		 * if the compiler is unable to run the code in the 'try' block, it will run the
+		 * If the compiler is unable to run the code in the 'try' block, it will run the
 		 * code in the 'catch' block
 		 */
 		catch (Exception e) {
-			// throw a new runtime exception
+			// Throw a new runtime exception
 			throw new RuntimeException(e);
 		}
-		// return the value of the 'output' variable to the calling function
+		// Return the value of the 'output' variable to the calling function
 		return output;
 	}
 
@@ -119,11 +119,13 @@ public class StringUtil {
 				// Append hex value to the hexString
 				hexString.append(hex);
 			}
-			// return the value of hexString as a text string
+			// Return the value of hexString as a text string
 			return hexString.toString();
 		}
-		// If the compiler is unsuccessful in running the code inside the 'try' section,
-		// it will run the code in the 'catch' section
+		/*
+		 * If the compiler is unsuccessful in running the code inside the 'try' section,
+		 * it will run the code in the 'catch' section
+		 */
 		catch (Exception e) {
 			// If the compiler runs the 'catch,' throw a new runtime exception error
 			throw new RuntimeException(e);
@@ -170,8 +172,10 @@ public class StringUtil {
 			// return the value of hexString as a text string
 			return hexString.toString();
 		}
-		// If the compiler is unsuccessful in running the code inside the 'try' section,
-		// it will run the code in the 'catch' section
+		/*
+		 * If the compiler is unsuccessful in running the code inside the 'try' section,
+		 * it will run the code in the 'catch' section
+		 */
 		catch (Exception e) {
 			// If the compiler runs the 'catch,' throw a new runtime exception error
 			throw new RuntimeException(e);
@@ -180,8 +184,10 @@ public class StringUtil {
 
 	// A method to return the difficulty as a String
 	public static String getDifficultyString(int difficulty) {
-		// Returns difficulty string target, to compare to hash. eg difficulty of 5 will
-		// return "00000"
+		/*
+		 * Returns difficulty string target, to compare to hash. E.g., difficulty of 5
+		 * will return "00000"
+		 */
 		return new String(new char[difficulty]).replace('\0', '0');
 	}
 
@@ -193,8 +199,10 @@ public class StringUtil {
 
 	// A method to return the merkel root as a String
 	public static String getMerkleRoot(ArrayList<Transaction> transactions) {
-		// initialize a local 'count' variable to the size of the transactions array
-		// list
+		/*
+		 * Initialize a local 'count' variable to the size of the transactions array
+		 * list
+		 */
 		int count = transactions.size();
 		// Create a new List object to store information about the previous Tree layer
 		List<String> previousTreeLayer = new ArrayList<String>();
@@ -219,9 +227,11 @@ public class StringUtil {
 			// Set the value of previousTreeLayer to the value of treeLayer
 			previousTreeLayer = treeLayer;
 		}
-		// create a string object to hold the merkel root; if the tree layer size is 1,
-		// then use the value of the treelayer object at position '0', otherwise set the
-		// value of the string to empty ("").
+		/*
+		 * Create a string object to hold the merkel root; if the tree layer size is 1,
+		 * then use the value of the treelayer object at position '0', otherwise set the
+		 * value of the string to empty ("").
+		 */
 		String merkleRoot = (treeLayer.size() == 1) ? treeLayer.get(0) : "";
 		// Return the string value contained in the merkleRoot variable
 		return merkleRoot;
@@ -242,14 +252,18 @@ public class StringUtil {
 			ecdsaVerify.initVerify(publicKey);
 			// Update the Signature object with the bytes from 'data'
 			ecdsaVerify.update(data.getBytes());
-			// Return a true if the byte array 'signature' is verified or a false if it is
-			// not verified
+			/*
+			 * Return a true if the byte array 'signature' is verified or a false if it is
+			 * not verified
+			 */
 			return ecdsaVerify.verify(signature);
 		}
-		// if the compiler is unable to run the code in the 'try' block, it will run the
-		// code in the 'catch' block
+		/*
+		 * If the compiler is unable to run the code in the 'try' block, it will run the
+		 * code in the 'catch' block
+		 */
 		catch (Exception e) {
-			// throw a new runtime exception error
+			// Throw a new runtime exception error
 			throw new RuntimeException(e);
 		}
 	}
@@ -264,14 +278,18 @@ public class StringUtil {
 			dsaVerify.initVerify(publicKey);
 			// Update the Signature object with the bytes from 'data'
 			dsaVerify.update(data.getBytes());
-			// Return a true if the byte array 'signature' is verified or a false if it is
-			// not verified
+			/*
+			 * Return a true if the byte array 'signature' is verified or a false if it is
+			 * not verified
+			 */
 			return dsaVerify.verify(signature);
 		}
-		// if the compiler is unable to run the code in the 'try' block, it will run the
-		// code in the 'catch' block
+		/*
+		 * If the compiler is unable to run the code in the 'try' block, it will run the
+		 * code in the 'catch' block
+		 */
 		catch (Exception e) {
-			// throw a new runtime exception error
+			// Throw a new runtime exception error
 			throw new RuntimeException(e);
 		}
 	}
