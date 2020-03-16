@@ -13,17 +13,20 @@ import java.util.HashMap;
 public class NoobChain {
 
 	// Intialize NoobChain fields
-	/* Create an ArrayList Object to hold blockchain information */
+	// Create an ArrayList Object to hold blockchain information
 	public static ArrayList<Block> blockchain = new ArrayList<Block>();
-	/* Create a Hashmap Object to hold UTXOs information */
+	// Create a Hashmap Object to hold UTXOs information
 	public static HashMap<String, TransactionOutput> UTXOs = new HashMap<String, TransactionOutput>();
-
-	public static int difficulty = 3; // Set the difficulty for mining blocks
-	public static float minimumTransaction = 0.1f; // Set a minimum transaction value
-	public static Wallet walletA; // Create a space in computer memory for walletA information
-	public static Wallet walletB; // Create a space in computer memory for walletB information
-	public static Transaction genesisTransaction; // Create a space in computer memory for genesisTransaction
-													// information
+	// Set the difficulty for mining blocks
+	public static int difficulty = 3;
+	// Set a minimum transaction value
+	public static float minimumTransaction = 0.1f;
+	// Create a space in computer memory for walletA information
+	public static Wallet walletA;
+	// Create a space in computer memory for walletB information
+	public static Wallet walletB;
+	// Create a space in computer memory for genesisTransaction information
+	public static Transaction genesisTransaction;
 
 	// The Main method, which is where the program begins
 	public static void main(String[] args) {
