@@ -42,13 +42,16 @@ public class NoobChain {
 
 		// create the genesis transaction, which sends 100 NoobCoin to walletA:
 		genesisTransaction = new Transaction(coinbase.publicKey, walletA.publicKey, 100f, null);
-		genesisTransaction.generateSignature(coinbase.privateKey); // manually sign the genesis transaction
-		genesisTransaction.transactionId = "0"; // manually set the transaction id
+		// Manually sign the genesis transaction
+		genesisTransaction.generateSignature(coinbase.privateKey);
+		// Manually set the genesisTransaction id
+		genesisTransaction.transactionId = "0";
+		// Manually add the Transactions Output
 		genesisTransaction.outputs.add(new TransactionOutput(genesisTransaction.recipient, genesisTransaction.value,
-				genesisTransaction.transactionId)); // manually add the Transactions Output
-		UTXOs.put(genesisTransaction.outputs.get(0).id, genesisTransaction.outputs.get(0)); // its important to store
-																							// our first transaction in
-																							// the UTXOs list.
+				genesisTransaction.transactionId));
+		// Store the first transaction in the UTXOs list
+		UTXOs.put(genesisTransaction.outputs.get(0).id, genesisTransaction.outputs.get(0));
+
 		// Print genesis block mining information to the console
 		System.out.println("Creating and Mining Genesis block... ");
 		// Create the genesis block
@@ -126,33 +129,43 @@ public class NoobChain {
 			previousBlock = blockchain.get(i - 1);
 			// compare registered hash and calculated hash:
 			if (!currentBlock.hash.equals(currentBlock.calculateHash())) {
-				// If the registered hash and calculated hash are unequal, print error message
-				// to console and return false
+				/*
+				 * If the registered hash and calculated hash are unequal, print error message
+				 * to console and return false
+				 */
 				System.out.println("#Current Hashes not equal");
 				return false;
 			}
 			// compare previous hash and registered previous hash
 			if (!previousBlock.hash.equals(currentBlock.previousHash)) {
-				// If the previous block's hash does not equal the currentBlock's previousHash
-				// value, print error message to console and return false
+				/*
+				 * If the previous block's hash does not equal the currentBlock's previousHash
+				 * value, print error message to console and return false
+				 */
 				System.out.println("#Previous Hashes not equal");
 				return false;
 			}
 			// check if hash is solved
 			if (!currentBlock.hash.substring(0, difficulty).equals(hashTarget)) {
-				// If the substring of the current block's hash does not equal the hashTarget,
-				// print error message to the console and return false
+				/*
+				 * If the substring of the current block's hash does not equal the hashTarget,
+				 * print error message to the console and return false
+				 */
 				System.out.println("#This block hasn't been mined");
 				return false;
 			}
 
-			// Create a TransactionOutput to temporarily store transaction output
-			// information
+			/*
+			 * Create a TransactionOutput to temporarily store transaction output
+			 * information
+			 */
 			TransactionOutput tempOutput;
 			// For each position of the currentBlock's transactions ...
 			for (int t = 0; t < currentBlock.transactions.size(); t++) {
-				// Create a new transaction object and set it to the current block's
-				// transactions at position 't'
+				/*
+				 * Create a new transaction object and set it to the current block's
+				 * transactions at position 't'
+				 */
 				Transaction currentTransaction = currentBlock.transactions.get(t);
 
 				// If the currentTransaction's signature is not valid
@@ -191,8 +204,10 @@ public class NoobChain {
 					tempUTXOs.remove(input.transactionOutputId);
 				}
 
-				// For each TransactionOutput object in the set of outputs in the
-				// currentTransaction...
+				/*
+				 * For each TransactionOutput object in the set of outputs in the
+				 * currentTransaction...
+				 */
 				for (TransactionOutput output : currentTransaction.outputs) {
 					// Put the output's id and value into tempUTXOs
 					tempUTXOs.put(output.id, output);
@@ -204,8 +219,10 @@ public class NoobChain {
 					System.out.println("#Transaction(" + t + ") output recipient is not who it should be");
 					return false;
 				}
-				// Check to see if the sender is the recipient of the change from the
-				// transaction
+				/*
+				 * Check to see if the sender is the recipient of the change from the
+				 * transaction
+				 */
 				if (currentTransaction.outputs.get(1).recipient != currentTransaction.sender) {
 					// Print error message to console and return false
 					System.out.println("#Transaction(" + t + ") output 'change' is not sender.");
