@@ -43,16 +43,20 @@ public class Block {
 			// Set minerAddress to the current machine's IP Address
 			minerAddress = InetAddress.getLocalHost().getHostAddress();
 		}
-		// If the compiler fails to run the code in the 'try' block, it will run the
-		// code in the 'catch' block
+		/*
+		 * If the compiler fails to run the code in the 'try' block, it will run the
+		 * code in the 'catch' block
+		 */
 		catch (UnknownHostException e) {
 			// print error information to the console
 			e.printStackTrace();
 		}
-		// sets the current block's previousHash value to the value of the previous
-		// block's hash
+		/*
+		 * Sets the current block's previousHash value to the value of the previous
+		 * block's hash
+		 */
 		this.previousHash = previousHash;
-		// gets the current time as a timestamp
+		// gets the current time as a timeStamp
 		this.timeStamp = new Date().getTime();
 		// Calculate a new hash based on the current block's contents
 		this.hash = calculateHash();
@@ -75,18 +79,24 @@ public class Block {
 		// Add transaction to the current block
 		transactions.add(transaction);
 
-		// print successful transaction message and print the transaction's SwansonQuote
-		// to the console
+		/*
+		 * Print successful transaction message and print the transaction's SwansonQuote
+		 * to the console
+		 */
 		System.out.println("Transaction Successfully added to Block: Ron Swanson - " + transaction.swansonQuote);
 		// return true
 		return true;
 	}
 
-	// A method to calculate and return a new hash based on the block's contents as
-	// a String
+	/*
+	 * A method to calculate and return a new hash based on the block's contents as
+	 * a String
+	 */
 	public String calculateHash() {
-		// creates and stores a cryptographic string of characters using a block's
-		// instance variables
+		/*
+		 * Creates and stores a cryptographic string of characters using a block's
+		 * instance variables
+		 */
 		String calculatedhash = StringUtil.applySha512(
 				previousHash + Long.toString(timeStamp) + Integer.toString(nonce) + miner + minerAddress + merkleRoot);
 		// returns the calculated cryptographic string
@@ -95,14 +105,18 @@ public class Block {
 
 	// A method to create (a.k.a., "mine") a new block for the blockchain
 	public void mineBlock(int difficulty) {
-		// calculate the merkle root for the block based on the transactions contained
-		// in the block
+		/*
+		 * Calculate the merkle root for the block based on the transactions contained
+		 * in the block
+		 */
 		merkleRoot = StringUtil.getMerkleRoot(transactions);
 		// Create a string with difficulty * "0"
 		String target = StringUtil.getDifficultyString(difficulty);
-		// use a loop to calculate the block's hash until the target string with the
-		// correct number of '0s' at the beginning, based on the difficulty variable, is
-		// created
+		/*
+		 * Use a loop to calculate the block's hash until the target string with the
+		 * correct number of '0s' at the beginning, based on the difficulty variable, is
+		 * created
+		 */
 		while (!hash.substring(0, difficulty).equals(target)) {
 			// increase the nonce value until the target is reached
 			nonce++;
