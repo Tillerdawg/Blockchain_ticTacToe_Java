@@ -28,9 +28,11 @@ import java.util.Map;
 // A class for creating Wallet objects
 public class Wallet {
 
-	// Initialize Wallet object fields
+	// Initialize privateKey of Wallet object
 	public PrivateKey privateKey;
+	// Initialize publicKey of Wallet object
 	public PublicKey publicKey;
+	// Create HashMap opbject to hold UTXOs for Wallet object
 	public HashMap<String, TransactionOutput> UTXOs = new HashMap<String, TransactionOutput>();
 
 	// Method for constructing a Wallet object
@@ -65,10 +67,13 @@ public class Wallet {
 			privateKey = keyPair.getPrivate();
 			// Set the public key from the keyPair
 			publicKey = keyPair.getPublic();
-		} // If the compiler cannot execute the code in the 'try' section, it will execute
-			// the code in the 'catch' section
+		}
+		/*
+		 * If the compiler cannot execute the code in the 'try' section, it will execute
+		 * the code in the 'catch' section
+		 */
 		catch (Exception e) {
-			// throw a runtime exception error
+			// Throw a runtime exception error
 			throw new RuntimeException(e);
 		}
 	}
@@ -80,8 +85,11 @@ public class Wallet {
 		// Get the value for each item in the UTXOs HashMap set
 		for (Map.Entry<String, TransactionOutput> item : NoobChain.UTXOs.entrySet()) {
 			TransactionOutput UTXO = item.getValue();
-			if (UTXO.isMine(publicKey)) { // if output belongs to me ( if coins belong to me )
-				UTXOs.put(UTXO.id, UTXO); // add it to our list of unspent transactions.
+			// If output belongs to me (if coins belong to me)
+			if (UTXO.isMine(publicKey)) {
+				// Add it to our list of unspent transactions
+				UTXOs.put(UTXO.id, UTXO);
+				// Add value of UTXO to total
 				total += UTXO.value;
 			}
 		}
@@ -93,8 +101,10 @@ public class Wallet {
 	public Transaction sendFunds(PublicKey _recipient, float value) {
 		// Check to see if there are enough funds to send a transaction
 		if (getBalance() < value) {
-			// If there are not enough funds in the balance, the transaction will fail and
-			// return null
+			/*
+			 * If there are not enough funds in the balance, the transaction will fail and
+			 * return null
+			 */
 			System.out.println("#Not Enough funds to send transaction. Transaction Discarded.");
 			return null;
 		}
@@ -108,15 +118,17 @@ public class Wallet {
 			TransactionOutput UTXO = item.getValue();
 			// add the item's value to the total
 			total += UTXO.value;
-			// add a TransactionInput object to the inputs ArrayList
+			// Add a TransactionInput object to the inputs ArrayList
 			inputs.add(new TransactionInput(UTXO.id));
 			// If the total of Output items is greater than the value being sent, break
 			if (total > value)
 				break;
 		}
 
-		// Create a new transaction using the Wallet's public key, the recipient's
-		// public key, the value of the transaction, and inputs
+		/*
+		 * Create a new transaction using the Wallet's public key, the recipient's
+		 * public key, the value of the transaction, and inputs
+		 */
 		Transaction newTransaction = new Transaction(publicKey, _recipient, value, inputs);
 		// Generate a signature for the transaction using the Wallet's private key
 		newTransaction.generateSignature(privateKey);
