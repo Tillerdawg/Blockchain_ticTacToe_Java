@@ -145,7 +145,8 @@ public class Transaction {
 		// Remove transaction inputs from UTXO lists as spent:
 		for (TransactionInput i : inputs) {
 			if (i.UTXO == null)
-				continue; // if Transaction can't be found skip it
+				// If Transaction can't be found, skip it
+				continue;
 			// Remove individual UTXO from UTXOs list
 			NoobChain.UTXOs.remove(i.UTXO.id);
 		}
