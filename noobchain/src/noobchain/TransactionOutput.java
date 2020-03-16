@@ -10,18 +10,23 @@ import java.security.PublicKey;
 
 // Class for creating TransactionOutput objects
 public class TransactionOutput {
-	// Initialize TransactionOutput object fields
-	public String id; // the id of a given TransactionOutput object
-	public PublicKey recipient; // also known as the new owner of these coins.
-	public float value; // the amount of coins they own
-	public String parentTransactionId; // the id of the transaction this output was created in
+	// The ID of a given TransactionOutput object
+	public String id;
+	// Also known as the new owner of these coins
+	public PublicKey recipient;
+	// The amount of coins they own
+	public float value;
+	// The ID of the transaction in which this output was created
+	public String parentTransactionId;
 
 	// A method for constructing TransactionOutput objects
 	public TransactionOutput(PublicKey recipient, float value, String parentTransactionId) {
-		// initialize instance variables
-		this.recipient = recipient; // sets the recipient of the transaction
-		this.value = value; // sets the value of the transaction
-		this.parentTransactionId = parentTransactionId; // sets the parent transaction's id
+		// Sets the recipient of the transaction
+		this.recipient = recipient;
+		// Sets the value of the transaction
+		this.value = value;
+		// Sets the parent transaction's ID
+		this.parentTransactionId = parentTransactionId;
 		// creates a unique id value for the transaction
 		this.id = StringUtil
 				.applySha256(StringUtil.getStringFromKey(recipient) + Float.toString(value) + parentTransactionId);
