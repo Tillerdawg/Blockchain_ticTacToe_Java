@@ -3,7 +3,7 @@
  */
 package noobchain; // this file is part of the noobchain package
 
-// Import needed io, net, and nio modules: BufferedReader, InputStreamReader, URL, URLConnection, and Charset
+/* Import needed io, net, and nio modules: BufferedReader, InputStreamReader, URL, URLConnection, and Charset */
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
@@ -33,19 +33,27 @@ public class SwansonQuote {
 
 	// A method for constructing SwansonQuote objects
 	public SwansonQuote() {
-		// Call the specified URL and store the contents of the response as text; the
-		// response from the URL is an array
+		/*
+		 * Call the specified URL and store the contents of the response as text; the
+		 * response from the URL is an array
+		 */
 		String response = callURL(source);
-		// Since the response is an array, use a substring calculation to remove the
-		// "[]"
+		/*
+		 * Since the response is an array, use a substring calculation to remove the
+		 * "[]"
+		 */
 		quote = response.substring(1, response.length() - 1) + "\n";
 	}
 
-	// A method for retrieving the response from a Web API and storing the response
-	// as a String
+	/*
+	 * A method for retrieving the response from a Web API and storing the response
+	 * as a String
+	 */
 	public static String callURL(String myURL) {
-		// Create a StringBuilder object to assist in constructing the response from the
-		// API
+		/*
+		 * Create a StringBuilder object to assist in constructing the response from the
+		 * API
+		 */
 		StringBuilder sb = new StringBuilder();
 		// Create a URLConnection object for use later
 		URLConnection urlConn = null;
@@ -63,11 +71,15 @@ public class SwansonQuote {
 				urlConn.setReadTimeout(60 * 1000);
 			// Check to see if there is a connection and an InputStream
 			if (urlConn != null && urlConn.getInputStream() != null) {
-				// Set the value of the InputStreamReader to the urlConn.getInputStream value
-				// and the value of the Charset object
+				/*
+				 * Set the value of the InputStreamReader to the urlConn.getInputStream value
+				 * and the value of the Charset object
+				 */
 				in = new InputStreamReader(urlConn.getInputStream(), Charset.defaultCharset());
-				// Use a BufferedReader object to read the contents of the InputStreamReader
-				// object
+				/*
+				 * Use a BufferedReader object to read the contents of the InputStreamReader
+				 * object
+				 */
 				BufferedReader bufferedReader = new BufferedReader(in);
 				// if the BufferedReader object exists
 				if (bufferedReader != null) {
@@ -85,16 +97,22 @@ public class SwansonQuote {
 			// Close the InputStream object
 			in.close();
 		}
-		// if the compiler is unsuccessful in running the code in the 'try' block, it
-		// will execute the code in the 'catch' block
+		/*
+		 * If the compiler is unsuccessful in running the code in the 'try' block, it
+		 * will execute the code in the 'catch' block
+		 */
 		catch (Exception e) {
-			// Throw a new RuntimeException error and print information about the error to
-			// the console
+			/*
+			 * Throw a new RuntimeException error and print information about the error to
+			 * the console
+			 */
 			throw new RuntimeException("Exception while calling URL:" + myURL, e);
 		}
 
-		// Return the StructuredBuffer object's contents as a String to the calling
-		// method
+		/*
+		 * Return the StructuredBuffer object's contents as a String to the calling
+		 * method
+		 */
 		return sb.toString();
 	}
 
